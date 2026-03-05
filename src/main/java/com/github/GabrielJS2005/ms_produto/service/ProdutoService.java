@@ -2,6 +2,7 @@ package com.github.GabrielJS2005.ms_produto.service;
 
 import com.github.GabrielJS2005.ms_produto.dto.ProdutoDTO;
 import com.github.GabrielJS2005.ms_produto.entities.Produto;
+import com.github.GabrielJS2005.ms_produto.exceptions.ResourceNotFoundException;
 import com.github.GabrielJS2005.ms_produto.repositories.ProdutoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class ProdutoService {
     public ProdutoDTO findProdutoById(Long id) {
 
         Produto produto = produtoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Recurso não encontrado. ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado. ID: " + id));
 
         return (new ProdutoDTO(produto));
 
@@ -68,7 +69,7 @@ public class ProdutoService {
 
         } catch (EntityNotFoundException e) {
 
-            throw new EntityNotFoundException("Recurso não encontrado. ID: " + id);
+            throw new ResourceNotFoundException("Recurso não encontrado. ID: " + id);
 
         }
 
@@ -78,7 +79,7 @@ public class ProdutoService {
     public void deleteProdutoById(Long id) {
 
         if(!produtoRepository.existsById(id)) {
-            throw new EntityNotFoundException("Recurso não encontrado. ID: " + id);
+            throw new ResourceNotFoundException("Recurso não encontrado. ID: " + id);
 
         }
 
